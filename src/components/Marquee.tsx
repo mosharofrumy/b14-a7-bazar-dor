@@ -1,92 +1,174 @@
-import MarqueeText from "react-fast-marquee";
 
-interface Product {
-  id: number;
-  slug: string;
-  nameBn: string;
-  category: string;
-  categoryNameBn: string;
-  categoryIcon: string;
-  unit: string;
-  image: string;
-  today: number;
-  yesterday: number;
-  lastWeek: number;
-  lastMonth: number;
-  change: {
-    dir: "up" | "down" | "flat";
-    pct: number;
-  };
-}
+// import MarqueeText from "react-fast-marquee";
+// import type { Product } from "@/types/product";
+
+// const API_URL =
+//   "https://api.api-store.workers.dev/api/bazardor/products";
+
+// const Marquee = async () => {
+//   const res = await fetch(API_URL, {
+//     next: {
+//       revalidate: 86400,
+//     },
+//   });
+
+//   if (!res.ok) {
+//     throw new Error("Failed to fetch products");
+//   }
+
+//   const data = await res.json();
+
+//   const products: Product[] = Array.isArray(data)
+//     ? data
+//     : data.data;
+
+//   if (!Array.isArray(products)) {
+//     throw new Error("Invalid products data");
+//   }
+
+//   // শুধু দাম বেড়েছে বা কমেছে এমন প্রোডাক্ট রাখুন
+//   const changedProducts = products.filter(
+//     (product) =>
+//       product.change.dir === "up" ||
+//       product.change.dir === "down",
+//   );
+
+//   const unitLabel: Record<string, string> = {
+//     kg: "কেজি",
+//     litre: "লিটার",
+//     dozen: "ডজন",
+//     piece: "পিস",
+//   };
+
+//   return (
+//     <div className="w-full overflow-hidden border-y border-gray-200 bg-white">
+//       <MarqueeText
+//         speed={200}
+//         direction="left"
+//         pauseOnHover
+//         gradient={false}
+//         autoFill
+//       >
+//         {changedProducts.map((product) => {
+//           const isUp = product.change.dir === "up";
+//           const isDown = product.change.dir === "down";
+
+//           return (
+//             <div
+//               key={product.id}
+//               className="flex items-center gap-2 border-r border-gray-300/70 px-2 py-1"
+//             >
+//               <span>{product.categoryIcon}</span>
+
+//               <span className="font-normal text-gray-700">
+//                 {product.nameBn}
+//               </span>
+
+//               <span className="font-normal text-gray-600">
+//                 {product.today.toLocaleString("bn-BD")} টাকা/
+//                 {unitLabel[product.unit] ?? product.unit}
+//               </span>
+
+//               <span
+//                 className={
+//                   isUp
+//                     ? "font-normal text-red-600"
+//                     : isDown
+//                       ? "font-normal text-green-700"
+//                       : ""
+//                 }
+//               >
+//                 {isUp ? "▲" : "▼"}{" "}
+//                 {Math.abs(product.change.pct).toLocaleString("bn-BD")}%
+//               </span>
+//             </div>
+//           );
+//         })}
+//       </MarqueeText>
+//     </div>
+//   );
+// };
+
+// export default Marquee;
+
+
+import MarqueeText from "react-fast-marquee";
+import type { Product } from "@/types/product";
+import { fetchFromAPI } from "@/lib/api";
+
+type ProductsResponse =
+  | Product[]
+  | {
+      data: Product[];
+    };
 
 const Marquee = async () => {
-  const res = await fetch(
-    "https://api.abcz.workers.dev/api/bazardor/products",
-    {
-      next: {
-        revalidate: 86400,
-      },
-    }
+  const data = await fetchFromAPI<ProductsResponse>(
+    "/products",
+    86400,
   );
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch products");
+  const products: Product[] = Array.isArray(data)
+    ? data
+    : data.data;
+
+  if (!Array.isArray(products)) {
+    throw new Error("Invalid products data");
   }
 
-  const data: Product[] = await res.json();
+  // শুধু দাম বেড়েছে বা কমেছে এমন প্রোডাক্ট রাখুন
+  const changedProducts = products.filter(
+    (product) =>
+      product.change?.dir === "up" ||
+      product.change?.dir === "down",
+  );
+
+  const unitLabel: Record<string, string> = {
+    kg: "কেজি",
+    litre: "লিটার",
+    dozen: "ডজন",
+    piece: "পিস",
+  };
 
   return (
-    <div className="w-full overflow-hidden border-t border-b border-gray-200">
+    <div className="w-full overflow-hidden border-y border-gray-200 bg-white">
       <MarqueeText
         speed={200}
         direction="left"
-        pauseOnHover={true}
+        pauseOnHover
         gradient={false}
-        autoFill={true}
+        autoFill
       >
-        {data.map((product) => {
+        {changedProducts.map((product) => {
           const isUp = product.change.dir === "up";
           const isDown = product.change.dir === "down";
-          const isFlat = product.change.dir === "flat";
 
           return (
             <div
               key={product.id}
-              className="flex items-center gap-2 px-6 py-1 whitespace-nowrap border-r border-gray-400/50"
+              className="flex items-center gap-2 border-r border-gray-300/70 px-2 py-1"
             >
-              {/* Product Icon */}
-              <span className="text-lg">
-                {product.image || product.categoryIcon}
-              </span>
+              <span>{product.categoryIcon}</span>
 
-              {/* Product Name */}
-              <span className="font-medium text-gray-900">
+              <span className="font-normal text-gray-700">
                 {product.nameBn}
               </span>
 
-              {/* Price */}
-              <span className="font-bold text-gray-900">
+              <span className="font-normal text-gray-600">
                 {product.today.toLocaleString("bn-BD")} টাকা/
-                {product.unit === "kg"
-                  ? "কেজি"
-                  : product.unit === "litre"
-                    ? "লিটার"
-                    : product.unit}
+                {unitLabel[product.unit] ?? product.unit}
               </span>
 
-              {/* Change */}
               <span
                 className={
                   isUp
-                    ? "font-semibold text-green-700"
+                    ? "font-normal text-red-600"
                     : isDown
-                      ? "font-semibold text-red-600"
-                      : "font-semibold text-gray-700"
+                      ? "font-normal text-green-700"
+                      : ""
                 }
               >
-                {isUp && "▲"}
-                {isDown && "▼"}
-                {isFlat && "—"}{" "}
+                {isUp ? "▲" : "▼"}{" "}
                 {Math.abs(product.change.pct).toLocaleString("bn-BD")}%
               </span>
             </div>

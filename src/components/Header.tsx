@@ -1,17 +1,22 @@
 import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
+import { connection } from "next/server";
 import NavManus from "./NavManus";
+import UserAccount from "./UserAccount"; // UserAccount কম্পোনেন্টটি ইমপোর্ট করুন
 
-const date = new Date().toLocaleDateString("bn-BD", {
-  dateStyle: "full",
-});
+const Header = async () => {
+  await connection();
 
-const Header = () => {
+  const date = new Date().toLocaleDateString("bn-BD", {
+    dateStyle: "full",
+    timeZone: "Asia/Dhaka",
+  });
+
   return (
-    <header className="border-b border-gray-200">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <header className="sticky top-0 z-50 border-b border-gray-200 bg-white">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between py-2">
-          <Link href="/" className="flex items-center justify-center gap-3">
+          <Link href="/" className="flex items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-green-600 shadow-sm">
               <ShoppingCart className="h-6 w-6 text-white" />
             </div>
@@ -21,18 +26,11 @@ const Header = () => {
               <div className="text-sm text-gray-700">{date}</div>
             </div>
           </Link>
-          <div className="flex items-center justify-end gap-2">
-            <button className="rounded px-5 py-2 font-semibold hover:bg-gray-300">
-              সাইন ইন
-            </button>
 
-            <button className="rounded bg-green-700 px-5 py-2 font-semibold text-white hover:bg-green-800">
-              সাইন আপ
-            </button>
-          </div>
+          {/* ইউজার অ্যাকাউন্ট স্টেট বা বাটনগুলো এখানে দেখাবে */}
+          <UserAccount />
         </div>
       </div>
-
       <NavManus />
     </header>
   );
