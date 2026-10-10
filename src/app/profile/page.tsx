@@ -15,21 +15,19 @@ const ProfilePage = () => {
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
   const [imageError, setImageError] = useState<boolean>(false);
 
-  // সেশন লোড হলে ইনপুট বক্সে ইউজারের বর্তমান নাম সেট করা
   useEffect(() => {
     if (session?.user?.name) {
       setName(session.user.name);
     }
   }, [session]);
 
-  // যদি ইউজার লগইন না থাকে তবে সাইন-ইন পেজে রিডাইরেক্ট করা
+
   useEffect(() => {
     if (!isPending && !session) {
       router.push("/signin");
     }
   }, [session, isPending, router]);
 
-  // নাম আপডেট করার হ্যান্ডলার
   const handleUpdateName = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -67,7 +65,6 @@ const ProfilePage = () => {
     }
   };
 
-  // সাইন আউট হ্যান্ডলার
   const handleSignOut = async () => {
     const loadingToast = toast.loading("সাইন আউট হচ্ছে...");
     await authClient.signOut({
@@ -102,7 +99,7 @@ const ProfilePage = () => {
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-12">
-      {/* টোস্ট নোটিফিকেশন */}
+   
       <Toaster position="top-center" reverseOrder={false} />
 
       <div className="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
@@ -110,7 +107,6 @@ const ProfilePage = () => {
           আমার প্রোফাইল
         </h1>
 
-        {/* ইউজার কার্ড (ছবি, নাম ও ইমেইল) */}
         <div className="flex items-center gap-4 mb-8 pb-6 border-b border-gray-100">
           {hasValidImage ? (
             <div className="relative h-16 w-16 overflow-hidden rounded-full border border-gray-200">
@@ -137,7 +133,6 @@ const ProfilePage = () => {
           </div>
         </div>
 
-        {/* এডিটেবল নেম ফিল্ড ও আপডেট বাটন */}
         <form onSubmit={handleUpdateName} className="mb-6">
           <label
             htmlFor="userName"
@@ -164,7 +159,6 @@ const ProfilePage = () => {
           </div>
         </form>
 
-        {/* অন্যান্য তথ্য */}
         <div className="space-y-4 text-sm pt-4 border-t border-gray-100">
           <div className="flex justify-between py-2 border-b border-gray-100">
             <span className="font-medium text-gray-600">ইমেইল ভেরিফাইড:</span>
@@ -182,7 +176,6 @@ const ProfilePage = () => {
           </div>
         </div>
 
-        {/* নিচের নেভিগেশন ও লগআউট বাটন */}
         <div className="mt-8 flex items-center justify-between pt-4 border-t border-gray-100">
           <Link
             href="/"

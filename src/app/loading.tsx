@@ -5,7 +5,6 @@ export default function Loading() {
   return (
     <main className="flex min-h-[70vh] items-center justify-center bg-green-50 px-4 py-12">
       <div className="w-full max-w-md rounded-3xl border border-green-100 bg-white px-6 py-12 text-center shadow-sm sm:px-10">
-        {/* Loading Icon */}
         <div className="relative mx-auto flex h-32 w-32 items-center justify-center">
           <div className="absolute inset-0 animate-spin rounded-full border-4 border-green-100 border-t-green-700" />
 
@@ -18,7 +17,6 @@ export default function Loading() {
           </div>
         </div>
 
-        {/* Loading Text */}
         <h1 className="mt-8 text-2xl font-bold text-gray-900 sm:text-3xl">
           তথ্য আনা হচ্ছে...
         </h1>
@@ -28,7 +26,6 @@ export default function Loading() {
           অনুগ্রহ করে একটু অপেক্ষা করুন।
         </p>
 
-        {/* Loading Dots */}
         <div className="mt-6 flex items-center justify-center gap-2">
           <span className="h-2.5 w-2.5 animate-bounce rounded-full bg-green-700 [animation-delay:-0.3s]" />
           <span className="h-2.5 w-2.5 animate-bounce rounded-full bg-green-600 [animation-delay:-0.15s]" />

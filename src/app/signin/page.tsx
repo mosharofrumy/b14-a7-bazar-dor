@@ -38,8 +38,7 @@ const SignInContent = () => {
         toast.error(error.message || "সাইন ইন করতে সমস্যা হয়েছে!");
     }
   };
-
-  // Google দিয়ে সাইন ইন হ্যান্ডলার
+  
   const handleGoogleSignIn = async () => {
       const loadingToast = toast.loading("গুগল দিয়ে লগইন হচ্ছে...");
       try {
@@ -54,7 +53,6 @@ const SignInContent = () => {
       }
   };
 
-  // GitHub দিয়ে সাইন ইন হ্যান্ডলার
   const handleGithubSignIn = async () => {
       const loadingToast = toast.loading("গিটহাব দিয়ে লগইন হচ্ছে...");
       try {

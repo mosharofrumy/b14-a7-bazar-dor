@@ -6,7 +6,6 @@ import React from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 
 const SignUpPage = () => {
-    // ইমেইল এবং পাসওয়ার্ড দিয়ে সাইন আপ হ্যান্ডলার
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
@@ -16,7 +15,6 @@ const SignUpPage = () => {
         const password = formData.get("password") as string;
         const confirmPassword = formData.get("confirmPassword") as string;
 
-        // পাসওয়ার্ড মিলছে কিনা চেক করা
         if (password !== confirmPassword) {
             toast.error("পাসওয়ার্ড দুটি মিলছে না!");
             return;
@@ -42,7 +40,6 @@ const SignUpPage = () => {
         }
     };
 
-    // Google দিয়ে সাইন ইন/আপ হ্যান্ডলার
     const handleGoogleSignUp = async () => {
         await authClient.signIn.social({
             provider: "google",
@@ -50,7 +47,6 @@ const SignUpPage = () => {
         });
     };
 
-    // GitHub দিয়ে সাইন ইন/আপ হ্যান্ডলার
     const handleGithubSignUp = async () => {
         await authClient.signIn.social({
             provider: "github",
@@ -60,11 +56,9 @@ const SignUpPage = () => {
 
     return (
         <div className="flex min-h-screen w-full items-center justify-center bg-gray-50/50 px-4 py-5">
-            {/* টোস্ট নোটিফিকেশন */}
             <Toaster position="top-center" reverseOrder={false} />
 
             <div className="w-full max-w-md space-y-6 text-center">
-                {/* Header Title */}
                 <div className="space-y-2">
                     <h1 className="text-3xl font-bold tracking-tight text-gray-900">
                         অ্যাকাউন্ট তৈরি করুন
@@ -74,10 +68,8 @@ const SignUpPage = () => {
                     </p>
                 </div>
 
-                {/* Form Card */}
                 <div className="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm text-left">
                     <form onSubmit={onSubmit} className="space-y-4">
-                        {/* Name Field */}
                         <div>
                             <label
                                 htmlFor="name"
@@ -95,7 +87,6 @@ const SignUpPage = () => {
                             />
                         </div>
 
-                        {/* Email Field */}
                         <div>
                             <label
                                 htmlFor="email"
@@ -113,7 +104,6 @@ const SignUpPage = () => {
                             />
                         </div>
 
-                        {/* Password Field */}
                         <div>
                             <label
                                 htmlFor="password"
@@ -131,7 +121,6 @@ const SignUpPage = () => {
                             />
                         </div>
 
-                        {/* Confirm Password Field */}
                         <div>
                             <label
                                 htmlFor="confirmPassword"
@@ -149,7 +138,6 @@ const SignUpPage = () => {
                             />
                         </div>
 
-                        {/* Submit Button */}
                         <button
                             type="submit"
                             className="w-full rounded-lg bg-green-700 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 mt-2"
@@ -158,7 +146,6 @@ const SignUpPage = () => {
                         </button>
                     </form>
 
-                    {/* Divider */}
                     <div className="relative my-6">
                         <div className="absolute inset-0 flex items-center">
                             <div className="w-full border-t border-gray-200" />
@@ -168,9 +155,7 @@ const SignUpPage = () => {
                         </div>
                     </div>
 
-                    {/* Social Logins */}
                     <div className="grid grid-cols-2 gap-3">
-                        {/* Google Button */}
                         <button
                             type="button"
                             onClick={handleGoogleSignUp}
@@ -197,7 +182,6 @@ const SignUpPage = () => {
                             Google দিয়ে চালিয়ে যান
                         </button>
 
-                        {/* GitHub Button */}
                         <button
                             type="button"
                             onClick={handleGithubSignUp}
@@ -210,7 +194,6 @@ const SignUpPage = () => {
                         </button>
                     </div>
 
-                    {/* Sign In Link */}
                     <div className="mt-6 text-center text-sm text-gray-600">
                         অ্যাকাউন্ট আছে?{" "}
                         <Link
@@ -222,7 +205,6 @@ const SignUpPage = () => {
                     </div>
                 </div>
 
-                {/* Back to Home */}
                 <div>
                     <Link
                         href="/"

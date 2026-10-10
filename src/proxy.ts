@@ -8,11 +8,9 @@ export async function proxy(request: NextRequest) {
     headers: request.headers,
   });
 
-  // ব্যবহারকারী সাইন ইন না করলে
   if (!session?.user) {
     const signInUrl = new URL("/signin", request.url);
 
-    // ব্যবহারকারী যে পেজটি খুলতে চেয়েছিল
     const callbackURL =
       request.nextUrl.pathname + request.nextUrl.search;
 
@@ -21,7 +19,6 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(signInUrl);
   }
 
-  // সাইন ইন করা থাকলে অনুরোধ চালিয়ে যাবে
   return NextResponse.next();
 }
 

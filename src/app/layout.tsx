@@ -34,10 +34,12 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="bn" 
-    data-theme="light" 
-    data-scroll-behavior="smooth"
-    className={notoSerifBengali.className}>
+    <html
+      lang="bn"
+      data-theme="light"
+      data-scroll-behavior="smooth"
+      className={notoSerifBengali.className}
+    >
       <body className="flex min-h-screen flex-col bg-green-50/50 antialiased">
         <Toaster
           position="top-center"

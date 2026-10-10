@@ -28,7 +28,6 @@ export async function fetchFromAPI<T>(
     } catch (error) {
       lastError = error;
 
-      // প্রথম API ব্যর্থ হলে দ্বিতীয় API চেষ্টা হবে
       console.warn(
         `Trying next API after failure: ${baseURL}`,
         error,

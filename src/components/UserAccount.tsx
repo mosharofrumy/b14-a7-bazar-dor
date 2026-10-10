@@ -13,7 +13,6 @@ const UserAccount = () => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
-  // মেনুর বাইরে ক্লিক করলে ড্রপডাউন বন্ধ করার জন্য
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -27,14 +26,12 @@ const UserAccount = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // সেশন লোডিং স্টেট (Skeleton Loader)
   if (isPending) {
     return (
       <div className="h-9 w-24 animate-pulse rounded-md bg-gray-200"></div>
     );
   }
 
-  // যদি ইউজার সাইন-ইন না করা থাকে
   if (!session) {
     return (
       <div className="flex items-center justify-end gap-2">
@@ -54,11 +51,9 @@ const UserAccount = () => {
     );
   }
 
-  // ইউজার সাইন-ইন করা থাকলে
   const user = session.user;
   const userInitial = user.name ? user.name.charAt(0).toUpperCase() : "U";
 
-  // সাইন আউট হ্যান্ডলার
   const handleSignOut = async () => {
     const loadingToast = toast.loading("সাইন আউট হচ্ছে...");
 
@@ -84,23 +79,7 @@ const UserAccount = () => {
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-2 rounded-full border border-gray-200 bg-white py-1.5 pl-2 pr-3.5 shadow-sm hover:bg-gray-50 transition focus:outline-none"
       >
-        {/* এভাটার ছবি অথবা নামের প্রথম অক্ষর
-        {user.image ? (
-          <Image
-            src={user.image}
-            alt={user.name || "User"}
-            width={32}
-            height={32}
-            className="h-8 w-8 rounded-full object-cover border border-gray-300"
-            unoptimized
-          />
-        ) : (
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-green-700 text-xs font-bold text-white">
-            {userInitial}
-          </div>
-        )} */}
-
-        {/* এভাটার ছবি অথবা নামের প্রথম অক্ষর */}
+        
         {user.image && user.image.trim() !== "" ? (
           <Image
             src={user.image}
@@ -135,7 +114,6 @@ const UserAccount = () => {
         </svg>
       </button>
 
-      {/* ড্রপডাউন মেনু */}
       {isOpen && (
         <div className="absolute right-0 mt-2 w-48 rounded-xl border border-gray-100 bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 z-50">
           <div className="px-4 py-2 border-b border-gray-100">

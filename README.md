@@ -22,7 +22,7 @@
 - **Git & GitHub** — Version control
 
 
-## ✨ Key Features
+## Key Features
 
 - **Modern Homepage:** A clean homepage with a hero banner, price highlights, and product sections.
 - **Daily Price Updates:** Displays products with increasing or decreasing prices and percentage changes.

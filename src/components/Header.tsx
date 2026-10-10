@@ -2,7 +2,7 @@ import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { connection } from "next/server";
 import NavManus from "./NavManus";
-import UserAccount from "./UserAccount"; // UserAccount কম্পোনেন্টটি ইমপোর্ট করুন
+import UserAccount from "./UserAccount";
 
 const Header = async () => {
   await connection();
@@ -26,8 +26,6 @@ const Header = async () => {
               <div className="text-sm text-gray-700">{date}</div>
             </div>
           </Link>
-
-          {/* ইউজার অ্যাকাউন্ট স্টেট বা বাটনগুলো এখানে দেখাবে */}
           <UserAccount />
         </div>
       </div>
