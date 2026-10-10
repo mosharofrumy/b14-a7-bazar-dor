@@ -4,7 +4,6 @@ import { mongodbAdapter } from "@better-auth/mongo-adapter";
 
 const uri = process.env.MONGODB_URL as string;
 
-// টাইপ সেফটি বজায় রেখে গ্লোবাল ক্যাশ ডিক্লেয়ার করা
 const globalForMongo = global as unknown as {
     _mongoClientPromise?: Promise<MongoClient>;
 };
@@ -22,7 +21,6 @@ if (process.env.NODE_ENV === "development") {
     clientPromise = client.connect();
 }
 
-// ডাটাবেজ ইনিশিয়ালাইজেশন
 const client = await clientPromise;
 const db = client.db("bazardor");
 
