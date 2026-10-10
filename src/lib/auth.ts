@@ -4,30 +4,28 @@ import { mongodbAdapter } from "@better-auth/mongo-adapter";
 
 const uri = process.env.MONGODB_URL as string;
 
-// সার্ভারলেসে বারবার কানেকশন ওপেন হওয়া রোধ করতে গ্লোবাল ভেরিয়েবল ব্যবহার
-let client: MongoClient;
+// টাইপ সেফটি বজায় রেখে গ্লোবাল ক্যাশ ডিক্লেয়ার করা
+const globalForMongo = global as unknown as {
+    _mongoClientPromise?: Promise<MongoClient>;
+};
+
 let clientPromise: Promise<MongoClient>;
 
 if (process.env.NODE_ENV === "development") {
-    // ডেভেলপমেন্ট মোডে গ্লোবাল ভেরিয়েবল ব্যবহার করা যাতে হট রিলোডিংয়ে অতিরিক্ত কানেকশন না হয়
-    if (!(global as any)._mongoClientPromise) {
-        client = new MongoClient(uri);
-        (global as any)._mongoClientPromise = client.connect();
+    if (!globalForMongo._mongoClientPromise) {
+        const client = new MongoClient(uri);
+        globalForMongo._mongoClientPromise = client.connect();
     }
-    clientPromise = (global as any)._mongoClientPromise;
+    clientPromise = globalForMongo._mongoClientPromise;
 } else {
-    // প্রডাকশন (ভার্সেল) মোডের জন্য
-    client = new MongoClient(uri);
+    const client = new MongoClient(uri);
     clientPromise = client.connect();
 }
 
-// ডাটাবেজ ইনস্ট্যান্স ইনিশিয়ালাইজ করার জন্য অ্যাসিনক্রোনাস ব্যবস্থা বা প্রমিজ হ্যান্ডেলিং
-const getDb = async () => {
-    const connectedClient = await clientPromise;
-    return connectedClient.db("bazardor");
-};
+// ডাটাবেজ ইনিশিয়ালাইজেশন
+const client = await clientPromise;
+const db = client.db("bazardor");
 
-// Better Auth কনফিগারেশন
 export const auth = betterAuth({
     emailAndPassword: {
         enabled: true,
@@ -42,7 +40,7 @@ export const auth = betterAuth({
             clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
         },
     },
-    database: mongodbAdapter(await getDb(), {
-        client: await clientPromise,
+    database: mongodbAdapter(db, {
+        client,
     }),
 });
