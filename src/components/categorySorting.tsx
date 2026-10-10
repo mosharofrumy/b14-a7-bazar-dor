@@ -32,7 +32,6 @@ export default function CategorySorting({
     setCurrentSort(selectedSort);
   }, [selectedSort]);
 
-  // বাইরে ক্লিক করলে অথবা Escape চাপলে ড্রপডাউন বন্ধ হবে
   useEffect(() => {
     function handleOutsideClick(event: MouseEvent) {
       if (
