@@ -1,4 +1,3 @@
-
 import { betterAuth } from "better-auth";
 import { MongoClient } from "mongodb";
 import { mongodbAdapter } from "@better-auth/mongo-adapter";
@@ -16,13 +15,15 @@ const globalForMongo = globalThis as typeof globalThis & {
 const client =
   globalForMongo.mongoClient ?? new MongoClient(uri);
 
-if (process.env.NODE_ENV !== "production") {
-  globalForMongo.mongoClient = client;
-}
+globalForMongo.mongoClient = client;
 
 const db = client.db("bazardor");
 
 export const auth = betterAuth({
+  database: mongodbAdapter(db, {
+    client,
+  }),
+
   emailAndPassword: {
     enabled: true,
   },
@@ -45,8 +46,4 @@ export const auth = betterAuth({
       trustedProviders: ["google", "github"],
     },
   },
-
-  database: mongodbAdapter(db, {
-    client,
-  }),
 });
