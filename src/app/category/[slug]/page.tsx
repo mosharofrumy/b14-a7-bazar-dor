@@ -190,7 +190,7 @@ async function CategoryProductsContent({
           <span className="font-bold">
             {categoryProducts.length.toLocaleString("bn-BD")}
           </span>{" "}
-          পণ্যের আজকের দাম ও পরিবর্তন।
+          টি পণ্যের আজকের দাম ও পরিবর্তন।
         </p>
       </div>
 
