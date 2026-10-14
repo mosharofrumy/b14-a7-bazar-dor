@@ -54,7 +54,7 @@ const SortingProducts = ({
           <p className="mt-1 text-sm text-gray-500">
             মোট{" "}
             {new Intl.NumberFormat("bn-BD").format(products.length)}
-            টি পণ্যের বাজারদর
+            {" "}টি পণ্যের বাজারদর
           </p>
         </div>
 

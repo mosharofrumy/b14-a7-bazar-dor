@@ -35,8 +35,7 @@ const SignUpPage = () => {
 
     if (data) {
       toast.success("সফলভাবে অ্যাকাউন্ট তৈরি হয়েছে!");
-      router.replace("/");
-      router.refresh();
+      window.location.replace("/");
 
       return;
     }

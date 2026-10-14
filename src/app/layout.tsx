@@ -63,12 +63,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
 
         <main className="w-full flex-1">
           {children}
-          <Toaster
-            position="top-center"
-            toastOptions={{
-              duration: 3000,
-            }}
-          />
         </main>
 
         <Footer />

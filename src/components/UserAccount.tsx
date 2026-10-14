@@ -32,24 +32,27 @@ const UserAccount = () => {
     );
   }
 
-  if (!session) {
-    return (
-      <div className="flex items-center justify-end gap-2">
-        <Link
-          href="/signin"
-          className="rounded px-5 py-2 font-semibold hover:bg-gray-100 transition"
-        >
-          সাইন ইন
-        </Link>
-        <Link
-          href="/signup"
-          className="rounded bg-green-700 px-5 py-2 font-semibold text-white hover:bg-green-800 transition"
-        >
-          সাইন আপ
-        </Link>
-      </div>
-    );
-  }
+  
+if (!session) {
+  return (
+    <div className="flex items-center justify-end gap-1.5 sm:gap-2">
+      <Link
+        href="/signin"
+        className="whitespace-nowrap rounded px-2.5 py-2 text-sm font-semibold transition hover:bg-gray-100 sm:px-5 sm:text-base"
+      >
+        সাইন ইন
+      </Link>
+
+      <Link
+        href="/signup"
+        className="whitespace-nowrap rounded bg-green-700 px-2.5 py-2 text-sm font-semibold text-white transition hover:bg-green-800 sm:px-5 sm:text-base"
+      >
+        সাইন আপ
+      </Link>
+    </div>
+  );
+}
+
 
   const user = session.user;
   const userInitial = user.name ? user.name.charAt(0).toUpperCase() : "U";
@@ -61,7 +64,7 @@ const UserAccount = () => {
       await authClient.signOut();
 
       toast.dismiss(loadingToast);
-      toast.success("সফলভাবে সাইন আউট হয়েছেন!");
+      toast.success("সফলভাবে সাইন আউট হয়েছেন!", { duration: 3000 });
 
       setIsOpen(false);
       router.replace("/");
@@ -79,7 +82,6 @@ const UserAccount = () => {
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-2 rounded-full border border-gray-200 bg-white py-1.5 pl-2 pr-3.5 shadow-sm hover:bg-gray-50 transition focus:outline-none"
       >
-        
         {user.image && user.image.trim() !== "" ? (
           <Image
             src={user.image}
