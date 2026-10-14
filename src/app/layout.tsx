@@ -61,9 +61,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <Marquee />
         </Suspense>
 
-        <main className="w-full flex-1">
-          {children}
-        </main>
+        <main className="w-full flex-1">{children}</main>
 
         <Footer />
       </body>
