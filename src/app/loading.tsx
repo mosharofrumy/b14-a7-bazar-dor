@@ -1,36 +1,34 @@
-
-import { ShoppingBasket } from "lucide-react";
+import ProductSkeleton from "@/components/ProductSkeleton";
 
 export default function Loading() {
   return (
-    <main className="flex min-h-[70vh] items-center justify-center bg-green-50 px-4 py-12">
-      <div className="w-full max-w-md rounded-3xl border border-green-100 bg-white px-6 py-12 text-center shadow-sm sm:px-10">
-        <div className="relative mx-auto flex h-32 w-32 items-center justify-center">
-          <div className="absolute inset-0 animate-spin rounded-full border-4 border-green-100 border-t-green-700" />
+    <main className="min-h-screen bg-green-50/50">
+      <div className="mx-auto max-w-6xl px-2 py-2">
+        <div className="mb-6 h-40 animate-pulse rounded-2xl bg-green-100 sm:h-52" />
 
-          <div className="flex h-24 w-24 items-center justify-center rounded-full bg-green-50">
-            <ShoppingBasket
-              size={46}
-              strokeWidth={1.6}
-              className="text-green-700"
-            />
+        <section className="py-7 sm:py-9">
+          <div className="mb-5">
+            <div className="h-7 w-48 animate-pulse rounded bg-gray-200" />
+            <div className="mt-2 h-4 w-64 max-w-full animate-pulse rounded bg-gray-200" />
           </div>
-        </div>
 
-        <h1 className="mt-8 text-2xl font-bold text-gray-900 sm:text-3xl">
-          তথ্য আনা হচ্ছে...
-        </h1>
+          <ProductSkeleton count={6} />
+        </section>
 
-        <p className="mx-auto mt-3 max-w-xs text-sm leading-7 text-gray-500 sm:text-base">
-          আপনার জন্য বাজারের সর্বশেষ দামগুলো নিয়ে আসছি।
-          অনুগ্রহ করে একটু অপেক্ষা করুন।
-        </p>
+        <section className="py-7 sm:py-9">
+          <div className="mb-5">
+            <div className="h-7 w-48 animate-pulse rounded bg-gray-200" />
+            <div className="mt-2 h-4 w-64 max-w-full animate-pulse rounded bg-gray-200" />
+          </div>
 
-        <div className="mt-6 flex items-center justify-center gap-2">
-          <span className="h-2.5 w-2.5 animate-bounce rounded-full bg-green-700 [animation-delay:-0.3s]" />
-          <span className="h-2.5 w-2.5 animate-bounce rounded-full bg-green-600 [animation-delay:-0.15s]" />
-          <span className="h-2.5 w-2.5 animate-bounce rounded-full bg-green-400" />
-        </div>
+          <ProductSkeleton count={6} />
+        </section>
+
+        <section className="py-7 sm:py-9">
+          <div className="mb-5 h-7 w-40 animate-pulse rounded bg-gray-200" />
+
+          <ProductSkeleton count={12} />
+        </section>
       </div>
     </main>
   );

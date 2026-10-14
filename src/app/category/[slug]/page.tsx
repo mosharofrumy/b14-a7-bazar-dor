@@ -1,4 +1,3 @@
-
 import { Suspense } from "react";
 import Link from "next/link";
 import type { Metadata } from "next";
@@ -9,6 +8,7 @@ import { fetchFromAPI } from "@/lib/api";
 
 import type { Category } from "@/types/category";
 import type { Product } from "@/types/product";
+import ProductSkeleton from "@/components/ProductSkeleton";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -44,10 +44,7 @@ function getArrayFromResponse<T>(payload: unknown): T[] {
 }
 
 async function getCategories(): Promise<Category[]> {
-  const payload = await fetchFromAPI<unknown>(
-    "/categories",
-    3600,
-  );
+  const payload = await fetchFromAPI<unknown>("/categories", 3600);
 
   const categories = getArrayFromResponse<Category>(payload);
 
@@ -59,10 +56,7 @@ async function getCategories(): Promise<Category[]> {
 }
 
 async function getProducts(): Promise<Product[]> {
-  const payload = await fetchFromAPI<unknown>(
-    "/products",
-    3600,
-  );
+  const payload = await fetchFromAPI<unknown>("/products", 3600);
 
   const products = getArrayFromResponse<Product>(payload);
 
@@ -93,10 +87,17 @@ export async function generateMetadata({
 
 function CategoryPageLoading() {
   return (
-    <main className="mx-auto min-h-64 max-w-7xl px-4 py-10">
-      <p className="text-center text-gray-500">
-        পণ্যের তথ্য লোড হচ্ছে...
-      </p>
+    <main className="mx-auto min-h-screen max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+      <div className="mb-4 h-4 w-56 max-w-full animate-pulse rounded bg-gray-200" />
+      <div className="border-b border-green-100 pb-5">
+        <div className="h-8 w-48 animate-pulse rounded bg-gray-200" />
+        <div className="mt-3 h-4 w-64 max-w-full animate-pulse rounded bg-gray-200" />
+      </div>
+      <div className="my-6 flex flex-wrap items-center justify-between gap-3">
+        <div className="h-5 w-40 animate-pulse rounded bg-gray-200" />
+        <div className="h-10 w-32 animate-pulse rounded-lg bg-gray-200" />
+      </div>
+      <ProductSkeleton count={6} />
     </main>
   );
 }
@@ -107,31 +108,20 @@ export default function CategoryProductsPage({
 }: PageProps) {
   return (
     <Suspense fallback={<CategoryPageLoading />}>
-      <CategoryProductsContent
-        params={params}
-        searchParams={searchParams}
-      />
+      <CategoryProductsContent params={params} searchParams={searchParams} />
     </Suspense>
   );
 }
 
-async function CategoryProductsContent({
-  params,
-  searchParams,
-}: PageProps) {
-  const [{ slug }, query] = await Promise.all([
-    params,
-    searchParams,
-  ]);
+async function CategoryProductsContent({ params, searchParams }: PageProps) {
+  const [{ slug }, query] = await Promise.all([params, searchParams]);
 
   const [categories, products] = await Promise.all([
     getCategories(),
     getProducts(),
   ]);
 
-  const category = categories.find(
-    (item) => item.slug === slug,
-  );
+  const category = categories.find((item) => item.slug === slug);
 
   if (!category) {
     return (
@@ -157,9 +147,7 @@ async function CategoryProductsContent({
   );
 
   const sort: SortOption =
-    query.sort === "asc" || query.sort === "desc"
-      ? query.sort
-      : "default";
+    query.sort === "asc" || query.sort === "desc" ? query.sort : "default";
 
   const sortedProducts = [...categoryProducts];
 
@@ -215,25 +203,18 @@ async function CategoryProductsContent({
       {sortedProducts.length > 0 ? (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {sortedProducts.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-            />
+            <ProductCard key={product.id} product={product} />
           ))}
         </div>
       ) : (
         <div className="rounded-2xl border border-dashed border-green-200 bg-white px-5 py-12 text-center">
-          <div className="mb-3 text-4xl">
-            {category.icon}
-          </div>
+          <div className="mb-3 text-4xl">{category.icon}</div>
 
           <h2 className="text-lg font-bold text-gray-800">
             এই ক্যাটাগরিতে কোনো পণ্য পাওয়া যায়নি
           </h2>
 
-          <p className="mt-2 text-sm text-gray-500">
-            পরে আবার চেষ্টা করুন।
-          </p>
+          <p className="mt-2 text-sm text-gray-500">পরে আবার চেষ্টা করুন।</p>
 
           <Link
             href="/"

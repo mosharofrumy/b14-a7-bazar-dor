@@ -1,4 +1,3 @@
-
 import { Suspense } from "react";
 import Link from "next/link";
 import { ArrowRight, TrendingDown, TrendingUp } from "lucide-react";
@@ -11,9 +10,10 @@ import type { Product } from "@/types/product";
 import { fetchFromAPI } from "@/lib/api";
 
 async function getProducts(): Promise<Product[]> {
-  const data = await fetchFromAPI<
-    Product[] | { data: Product[] }
-  >("/products", 3600);
+  const data = await fetchFromAPI<Product[] | { data: Product[] }>(
+    "/products",
+    3600,
+  );
 
   const products = Array.isArray(data) ? data : data.data;
 
@@ -48,9 +48,7 @@ function ProductSection({
             {title}
           </h2>
 
-          <p className="mt-1 text-sm text-gray-500">
-            {description}
-          </p>
+          <p className="mt-1 text-sm text-gray-500">{description}</p>
         </div>
 
         {viewAll && (
@@ -94,9 +92,7 @@ export default async function Home() {
   return (
     <main className="min-h-screen bg-green-50/50">
       <Suspense
-        fallback={
-          <div className="h-20 border-b border-green-100 bg-white" />
-        }
+        fallback={<div className="h-20 border-b border-green-100 bg-white" />}
       >
         <Banner />
       </Suspense>
