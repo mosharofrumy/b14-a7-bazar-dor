@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 import { House, SearchX } from "lucide-react";
 
@@ -6,7 +5,6 @@ export default function NotFound() {
   return (
     <main className="flex min-h-[75vh] items-center justify-center bg-green-50 px-4 py-12">
       <div className="w-full max-w-2xl rounded-3xl border border-green-100 bg-white px-6 py-12 text-center shadow-sm sm:px-12 sm:py-16">
-    
         <div className="relative mx-auto flex h-36 w-36 items-center justify-center rounded-full bg-green-50 sm:h-44 sm:w-44">
           <div className="absolute inset-2 rounded-full border-2 border-dashed border-green-200" />
 
@@ -21,7 +19,6 @@ export default function NotFound() {
           </span>
         </div>
 
-   
         <p className="mt-8 text-sm font-semibold uppercase tracking-[0.2em] text-green-700">
           Page Not Found
         </p>
@@ -31,12 +28,10 @@ export default function NotFound() {
         </h1>
 
         <p className="mx-auto mt-4 max-w-lg text-sm leading-7 text-gray-500 sm:text-base">
-          আপনি যে পৃষ্ঠাটি খুঁজছেন সেটি সরানো হয়েছে,
-          অথবা ঠিকানাটি ভুল হতে পারে। চলুন, আবার বাজার-দরের
-          হোমপেজ থেকে শুরু করি।
+          আপনি যে পৃষ্ঠাটি খুঁজছেন সেটি সরানো হয়েছে, অথবা ঠিকানাটি ভুল হতে পারে।
+          চলুন, আবার বাজার-দরের হোমপেজ থেকে শুরু করি।
         </p>
 
-   
         <div className="mt-8 flex justify-center">
           <Link
             href="/"
@@ -46,7 +41,6 @@ export default function NotFound() {
             হোমে ফিরে যান
           </Link>
         </div>
-
       </div>
     </main>
   );

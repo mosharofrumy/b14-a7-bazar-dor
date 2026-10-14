@@ -13,7 +13,7 @@ interface SortableProductSectionProps {
 const SortingProducts = ({
   products,
 }: SortableProductSectionProps) => {
-  const [sortOrder, setSortOrder] = useState("asc");
+  const [sortOrder, setSortOrder] = useState("default");
   const [isOpen, setIsOpen] = useState(false);
 
   const sortOptions = [
